@@ -1,0 +1,17 @@
+[
+  {
+    "id": "d0d59522-bfae-4d10-bfe0-cf740b657084",
+    "nome": "teste",
+    "email": "teste@gmail.com",
+    "telefone": "83999082283",
+    "nascimento": "11122001",
+    "cep": "58052100",
+    "bairro": "Anatólia",
+    "logradouro": "Rua da Imbiribeira",
+    "numero": "1",
+    "estado": "PB",
+    "cidade": "João Pessoa",
+    "createdAt": "2026-05-08T23:16:47.013Z",
+    "updatedAt": "2026-05-08T23:16:47.013Z"
+  }
+]
