@@ -160,7 +160,7 @@ class ContactViewModel : ViewModel() {
             _isCepLoading.value = true
             val result = repository.searchCep(cleanCep)
             result.onSuccess { response ->
-                _estado.value = response.estado
+                _estado.value = response.uf
                 _cidade.value = response.cidade
                 _bairro.value = response.bairro
                 _logradouro.value = response.logradouro

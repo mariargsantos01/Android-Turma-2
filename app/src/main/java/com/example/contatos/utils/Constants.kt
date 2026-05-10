@@ -3,7 +3,7 @@ package com.example.contatos.utils
 object Constants {
     // URL pública do backend hospedado no Render.
     // Substitua pelo domínio real do seu backend quando necessário.
-    const val BASE_URL = "https://seu-backend.onrender.com/"
+    const val BASE_URL = "https://android-turma-2.onrender.com/"
 
     const val VIACEP_URL = "https://viacep.com.br/"
     const val CEP_LENGTH = 8

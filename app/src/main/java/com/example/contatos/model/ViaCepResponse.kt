@@ -9,8 +9,7 @@ data class ViaCepResponse(
     val bairro: String = "",
     @SerializedName("localidade")
     val cidade: String = "",
-    @SerializedName("uf")
-    val estado: String = "",
+    val uf: String = "",
     val erro: Boolean = false
 )
 
