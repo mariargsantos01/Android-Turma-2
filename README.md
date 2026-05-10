@@ -39,6 +39,7 @@ Sistema para gerenciamento de contatos com as seguintes funcionalidades:
 **API em execução via Render:**  
 🔗 https://android-turma-2.onrender.com/
 
+**Quando colocar o CEP esperar 1 minuto para o servidor do Render Startar**
 ---
 
 ⚠️ **QUALQUER DÚVIDA, LEIA O README ESPECÍFICO DE CADA PROJETO.**
