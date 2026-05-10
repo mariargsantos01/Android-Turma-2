@@ -1,6 +1,6 @@
 # Contacts API
 
-API REST simples para gerenciamento de contatos com Node.js, Express e armazenamento em arquivo JSON local. O projeto foi preparado para integração com aplicativo Android Kotlin e para deploy em plataformas Node.js como Render e Railway.
+API REST simples para gerenciamento de contatos com Node.js, Express e armazenamento em arquivo JSON local. O projeto foi preparado para integração com aplicativo Android Kotlin e funciona em plataformas Node.js como Render e Railway.
 
 ## Tecnologias
 
@@ -11,6 +11,11 @@ API REST simples para gerenciamento de contatos com Node.js, Express e armazenam
 - dotenv
 - uuid
 - File System (`fs`)
+
+## Requisitos
+
+- Node.js 18 ou superior
+- npm 9 ou superior
 
 ## Estrutura do projeto
 
@@ -70,7 +75,22 @@ Cada contato possui os campos:
 }
 ```
 
+### Rota inexistente
+
+```json
+{
+  "success": false,
+  "message": "Rota não encontrada"
+}
+```
+
 ## Endpoints
+
+Base URL em produção:
+
+```text
+https://android-turma-2.onrender.com/
+```
 
 ### `GET /`
 
@@ -122,6 +142,12 @@ Atualiza um contato existente.
 
 Remove um contato.
 
+Exemplos em produção:
+
+- `GET https://android-turma-2.onrender.com/`
+- `GET https://android-turma-2.onrender.com/contacts`
+- `POST https://android-turma-2.onrender.com/contacts`
+
 ## Como rodar localmente
 
 ### 1. Instalar dependências
@@ -159,6 +185,12 @@ A API ficará disponível em:
 http://localhost:3000
 ```
 
+Em produção, a API ficará disponível em:
+
+```text
+https://android-turma-2.onrender.com/
+```
+
 ## Armazenamento em JSON
 
 Os dados são gravados em `database/contacts.json`.
@@ -170,68 +202,35 @@ Características da persistência:
 - grava alterações com escrita atômica usando arquivo temporário
 - mantém `createdAt` e `updatedAt`
 - continua funcionando sem banco SQL
+- valida se o conteúdo do arquivo é uma lista válida
+- falha com erro controlado se o JSON estiver corrompido
 
-## Deploy no Render
+## Comportamento do servidor
 
-### 1. Criar conta
+- usa `process.env.PORT || 3000`
+- escuta em `0.0.0.0` para compatibilidade com hospedagens Node.js online
+- expõe `GET /` como health check
+- desabilita o header `x-powered-by`
+- aceita JSON com limite de `1mb`
+- libera CORS para integração com o app Android
+- trata `unhandledRejection` e `uncaughtException`
 
-Crie uma conta em https://render.com.
+## Compatibilidade com hospedagens online
 
-### 2. Conectar GitHub
-
-No painel do Render, conecte sua conta do GitHub e autorize o repositório do projeto.
-
-### 3. Escolher o projeto backend
-
-- Clique em **New +**
-- Escolha **Web Service**
-- Selecione o repositório deste backend
-
-### 4. Configurar o serviço
-
-Preencha com:
-
-- **Environment**: `Node`
-- **Build Command**: `npm install`
-- **Start Command**: `npm start`
-
-### 5. Configurar variáveis de ambiente
-
-Adicione no painel do Render:
-
-```env
-PORT=10000
-NODE_ENV=production
-```
-
-Observação: o Render normalmente injeta `PORT` automaticamente. A API já está preparada para usar `process.env.PORT || 3000`.
-
-### 6. Publicar
-
-Finalize a criação do serviço e aguarde o deploy.
-
-Quando o deploy terminar, sua API ficará disponível em uma URL pública do Render.
-
-## Compatibilidade com Railway e outras hospedagens Node.js
-
-O projeto também está pronto para plataformas como Railway e similares porque:
+O projeto está pronto para uso em hospedagens Node.js online, incluindo Render e Railway, porque:
 
 - usa `process.env.PORT`
 - sobe com `npm start`
 - escuta em `0.0.0.0`
 - não depende de banco externo
 - usa apenas armazenamento local em JSON
+- possui endpoint raiz útil para health check
 
 ## Importante sobre persistência online
 
-Este projeto usa arquivo local JSON. Em plataformas com sistema de arquivos efêmero, como deploy padrão sem disco persistente, os dados podem ser perdidos após reinício ou novo deploy.
+Este projeto usa arquivo local JSON. Em plataformas com sistema de arquivos efêmero, os dados podem ser perdidos após reinício ou novo deploy.
 
-Para persistência real no Render, use uma destas opções:
-
-- anexar um disco persistente ao serviço, quando disponível no seu plano
-- manter este backend em uma hospedagem com filesystem persistente
-
-Se o serviço for executado sem disco persistente, a API continuará funcionando, mas o arquivo `database/contacts.json` poderá ser recriado vazio após reinicializações da infraestrutura.
+A API continua funcionando normalmente nessas plataformas, mas o arquivo `database/contacts.json` pode ser recriado vazio após reinicializações da infraestrutura.
 
 ## Scripts disponíveis
 
@@ -249,3 +248,4 @@ Se o serviço for executado sem disco persistente, a API continuará funcionando
 - há tratamento global de erros
 - o endpoint raiz pode ser usado como health check
 - o projeto está pronto para deploy simples
+- o arquivo `contacts.json` é criado automaticamente no primeiro start, se necessário
